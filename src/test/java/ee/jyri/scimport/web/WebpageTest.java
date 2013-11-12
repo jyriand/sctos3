@@ -1,39 +1,78 @@
 package ee.jyri.scimport.web;
 
+import ee.jyri.scimport.service.SoundcloudService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static ee.jyri.scimport.web.HomeController.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
+@RunWith(MockitoJUnitRunner.class)
 public class WebpageTest {
-
-    @Autowired
-    WebApplicationContext wac;
 
     private MockMvc mockMvc;
 
+    public static final String VALID_USERNAME = "ValidUser";
+
+    public static final String INVALID_USERNAME = "InValidUser";
+
+    @Mock
+    private SoundcloudService soundcloudService;
+
+    @InjectMocks
+    private HomeController homeController;
+
     @Before
     public void setUp(){
-        this.mockMvc = webAppContextSetup(this.wac).build();
+        this.mockMvc = standaloneSetup(homeController).build();
     }
 
     @Test
-    public void testFoo() throws Exception {
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
+    public void rootPathReturnsStatusOK() throws Exception {
+        this.mockMvc.perform(get("/"))
+                .andExpect(view().name("home"));
     }
 
+    @Test
+    public void searchForExistngUsersSongs_shouldReturnModelWithSongs() throws Exception {
+        List<String> songs = new ArrayList<String>();
+        songs.add( "First song");
+        songs.add( "Second song");
+
+        when(soundcloudService.findUserSongs(anyString()))
+                .thenReturn(songs);
+
+        mockMvc.perform(get("/searchUser/" + VALID_USERNAME))
+                .andExpect(model().attributeExists(MODEL_SONGS))
+                .andExpect(model().attribute(MODEL_SONGS, songs));
+
+        verify(soundcloudService, times(1)).findUserSongs(VALID_USERNAME);
+    }
+
+    @Test
+    public void searchForNonExistingUsersSongs_shouldReturnNothing() throws Exception {
+        ArrayList<String> emptyList = new ArrayList<String>();
+        when(soundcloudService.findUserSongs(anyString())).thenReturn(emptyList);
+
+        mockMvc.perform(get("/searchUser/" + INVALID_USERNAME))
+                .andExpect(model().attribute(MODEL_SONGS, emptyList));
+
+        verify(soundcloudService, times(1)).findUserSongs(INVALID_USERNAME);
+    }
 }
