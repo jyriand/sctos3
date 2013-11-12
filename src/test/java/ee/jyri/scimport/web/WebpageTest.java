@@ -1,12 +1,15 @@
 package ee.jyri.scimport.web;
 
 import ee.jyri.scimport.service.SoundcloudService;
+import ee.jyri.scimport.service.UploadService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -35,12 +38,17 @@ public class WebpageTest {
     @Mock
     private SoundcloudService soundcloudService;
 
+    @Mock
+    private UploadService uploadService;
+
     @InjectMocks
     private HomeController homeController;
 
     @Before
     public void setUp(){
-        this.mockMvc = standaloneSetup(homeController).build();
+        this.mockMvc = standaloneSetup(homeController)
+                .alwaysExpect(status().isOk())
+                .build();
     }
 
     @Test
@@ -75,4 +83,20 @@ public class WebpageTest {
 
         verify(soundcloudService, times(1)).findUserSongs(INVALID_USERNAME);
     }
+
+    @Test
+    public void canSaveSongToStorage() throws Exception {
+        List<String> songs = new ArrayList<String>();
+        songs.add( "First song");
+        songs.add( "Second song");
+
+        when(soundcloudService.findUserSongs(anyString())).thenReturn(songs);
+
+        mockMvc.perform(get("/"+ VALID_USERNAME + "/saveSong/1"));
+
+        verify(soundcloudService, times(1)).findUserSongs(VALID_USERNAME);
+        verify(uploadService).uploadFile(anyString());
+
+    }
+
 }
