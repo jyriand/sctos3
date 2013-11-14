@@ -1,10 +1,7 @@
 package ee.jyri.scimport.web;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import ee.jyri.scimport.domain.SimpleResponse;
 import ee.jyri.scimport.domain.Song;
@@ -15,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
@@ -39,23 +33,24 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/searchUser/{username}", method = RequestMethod.GET)
-    public String searchUser(@PathVariable String username, Model model) {
-        model.addAttribute(MODEL_SONGS, soundcloudService.findUserSongs(username));
+    @RequestMapping(value = "/searchUserSongs", method = RequestMethod.GET)
+    public String searchUser(@RequestParam String username, Model model) {
+        model.addAttribute(MODEL_SONGS, soundcloudService.findUserSongs(username).values());
+        model.addAttribute("username", username );
         return "home";
     }
 
-    @RequestMapping(value = "/{username}/saveSong/{songId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/saveSong", method = RequestMethod.GET)
     public @ResponseBody
-    SimpleResponse saveSongToStorage(@PathVariable String username, @PathVariable String songId, Model model) {
+    SimpleResponse saveSongToStorage(@RequestParam String username, @RequestParam String songId, Model model) {
 
-        List<Song> userSongs = soundcloudService.findUserSongs(username);
+        Map<String, Song> userSongs = soundcloudService.findUserSongs(username);
 
         if( userSongs == null || userSongs.isEmpty() ){
             return new SimpleResponse( false );
         }
 
-        uploadService.uploadFile( userSongs.get(Integer.valueOf(songId)) );
+        uploadService.uploadFile( userSongs.get(songId) );
         return new SimpleResponse(true);
     }
 

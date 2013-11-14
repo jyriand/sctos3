@@ -1,0 +1,69 @@
+<html>
+<head>
+	<title>Home</title>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script>
+		$(function(){
+			$(".sendSong").click(function(){
+				console.log("Clicked")
+				var id = $(this).replaceWith("SENDING");
+
+				$(this).attr('disabled');
+				// $.get('/saveSong/'+id, function(data){
+				// 	if(data.success){
+				// 		alert("Successfull");
+				// 	}else{
+				// 		alert("Failed");
+				// 	}
+				// });
+
+			});
+
+
+
+		});
+
+		// function searchUserSongsRequest(username, form){
+		// 	$.post('/searchUserSongs', form.serialize(), function(response){
+		// 		if(response.success){
+
+		// 		}
+		// 	});
+		// }
+
+
+
+
+	</script>
+
+</head>
+<body style="margin-left:60px;">
+<h1>
+	Soundclub to Amazon S3 importer
+</h1>
+<hr>
+<form id="userSearchForm" action="/searchUserSongs" method="post">
+	<input name="username" type="text">
+	<button type="submit">Search User</button>
+</form>
+
+<table>
+	<tr>
+		<th>Song name</th>
+		<th>Duration</th>
+		<th>Action</th>
+	</tr>
+	<tr>
+		<td>First song</td>
+		<td>3:00</td>
+		<td><button>Send to S3</button></td>
+	</tr>
+	<tr>
+		<td>Second song</td>
+		<td>3:00</td>
+		<td><button class="sendSong" id="2">Send to S3</button></td>
+	</tr>
+</table>
+
+</body>
+</html>

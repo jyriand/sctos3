@@ -3,7 +3,7 @@ package ee.jyri.scimport.service;
 import ee.jyri.scimport.domain.Song;
 import org.springframework.stereotype.Service;
 
-
+@Service
 public class S3UploadService implements UploadService<Song> {
     @Override
     public void uploadFile(Song fileName) {
