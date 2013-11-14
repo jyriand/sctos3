@@ -6,13 +6,13 @@
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script>
         $(function(){
-            $(".sendSong").click(function(){
+            $(".sendTrack").click(function(){
                 console.log('This button clikked')
                 var button = $(this);
                 var id = $(this).attr('id');
                 var user = $(this).attr('user');
 
-                var url = '/saveSong?username=' + user + '&songId='+id;
+                var url = '/saveTrack?username=' + user + '&trackId='+id;
                 $.get(url, function(data){
                     if(data.success){
                         button.replaceWith("SENDING");
@@ -41,12 +41,12 @@
 		<th>Duration</th>
 		<th>Action</th>
 	</tr>
-	<c:if test="${not empty userSongs}">
-	<c:forEach var="song" items="${userSongs}">
+	<c:if test="${not empty userTracks}">
+	<c:forEach var="track" items="${userTracks}">
         <tr>
             <td>${song.id}</td>
             <td>3:00</td>
-            <td><button class="sendSong" id="${song.id}" user="${username}">Send to S3</button></td>
+            <td><button class="sendTrack" id="${track.id}" user="${username}">Send to S3</button></td>
         </tr>
 	</c:forEach>
 	</c:if>
