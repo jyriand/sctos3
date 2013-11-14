@@ -42,7 +42,7 @@ public class WebpageTest {
     private UploadService< Song > uploadService;
 
     @InjectMocks
-    private HomeController homeController;
+    private HomeController homeController = new HomeController();
 
     @Before
     public void setUp(){
