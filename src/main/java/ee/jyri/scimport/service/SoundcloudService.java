@@ -3,7 +3,7 @@ package ee.jyri.scimport.service;
 
 import java.util.List;
 
-public interface SoundcloudService {
+public interface SoundcloudService <T> {
 
-    List< String > findUserSongs( String username );
+    List< T > findUserSongs( String username );
 }

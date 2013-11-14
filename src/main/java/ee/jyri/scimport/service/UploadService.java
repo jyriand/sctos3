@@ -3,7 +3,7 @@ package ee.jyri.scimport.service;
 
 import java.io.File;
 
-public interface UploadService {
+public interface UploadService< T > {
 
-    void uploadFile( String fileName );
+    void uploadFile( T fileName );
 }

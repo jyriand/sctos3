@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import com.sun.security.auth.SolarisNumericGroupPrincipal;
+import ee.jyri.scimport.domain.SimpleResponse;
 import ee.jyri.scimport.domain.Song;
 import ee.jyri.scimport.service.SoundcloudService;
 import ee.jyri.scimport.service.UploadService;
@@ -28,10 +28,10 @@ public class HomeController {
     public static final String MODEL_SONGS = "userSongs";
 
     @Autowired
-    private SoundcloudService soundcloudService;
+    private SoundcloudService< Song > soundcloudService;
 
     @Autowired
-    private UploadService uploadService;
+    private UploadService< Song > uploadService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home( Model model) {
@@ -46,11 +46,17 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/{username}/saveSong/{songId}", method = RequestMethod.GET)
-    public String saveSongToStorage(@PathVariable String username, @PathVariable String songId, Model model) {
+    public @ResponseBody
+    SimpleResponse saveSongToStorage(@PathVariable String username, @PathVariable String songId, Model model) {
 
-        List<String> userSongs = soundcloudService.findUserSongs(username);
-        uploadService.uploadFile(userSongs.get(Integer.valueOf(songId)));
-        return "home";
+        List<Song> userSongs = soundcloudService.findUserSongs(username);
+
+        if( userSongs == null || userSongs.isEmpty() ){
+            return new SimpleResponse( false );
+        }
+
+        uploadService.uploadFile( userSongs.get(Integer.valueOf(songId)) );
+        return new SimpleResponse(true);
     }
 
 }
