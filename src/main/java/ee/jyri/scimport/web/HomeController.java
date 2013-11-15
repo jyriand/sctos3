@@ -4,6 +4,7 @@ import java.util.*;
 
 import ee.jyri.scimport.domain.SimpleResponse;
 import ee.jyri.scimport.domain.Track;
+import ee.jyri.scimport.error.NoSuchUserException;
 import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = REQ_SEARCH_TRACKS, method = RequestMethod.GET)
-    public String searchUser(@RequestParam String username, Model model) {
+    public String searchUser(@RequestParam String username, Model model) throws Exception {
         model.addAttribute(MODEL_TRACKS, trackService.findUserTracks(username).values());
         model.addAttribute("username", username );
         return VIEW_HOME;
@@ -44,7 +45,7 @@ public class HomeController {
 
     @RequestMapping(value = REQ_SAVE_TRACK, method = RequestMethod.GET)
     public @ResponseBody
-    SimpleResponse saveSongToStorage(@RequestParam String username, @RequestParam String trackId, Model model) {
+    SimpleResponse saveSongToStorage(@RequestParam String username, @RequestParam String trackId, Model model) throws Exception {
 
         Map<String, Track> userTracks = trackService.findUserTracks(username);
 

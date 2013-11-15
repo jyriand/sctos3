@@ -1,6 +1,8 @@
 package ee.jyri.scimport.web;
 
+import ee.jyri.scimport.TestConstants;
 import ee.jyri.scimport.domain.Track;
+import ee.jyri.scimport.service.SoundcloudTrackService;
 import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.junit.Before;
@@ -14,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ee.jyri.scimport.TestConstants.*;
 import static ee.jyri.scimport.web.HomeController.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -26,11 +29,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @RunWith(MockitoJUnitRunner.class)
 public class WebpageTest {
 
-    public static final String USERNAME = "username";
-    public static final String TRACK_ID = "trackId";
-    public static final String EXISTING_USER = "ValidUser";
-    public static final String NONEXISTING_USER = "InValidUser";
-    public static final String JSON_CHARSET = "application/json;charset=UTF-8";
 
     private MockMvc mockMvc;
 
