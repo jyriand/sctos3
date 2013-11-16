@@ -2,23 +2,45 @@ package ee.jyri.scimport.service;
 
 import ee.jyri.scimport.domain.Track;
 import ee.jyri.scimport.error.NoSuchUserException;
+import ee.jyri.scimport.helper.SoundcloudJsonDeserializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class SoundcloudTrackService implements TrackService {
+
+    public static final String ERRORS = "errors";
+
+    @Autowired
+    private SoundcloudApiAdapter apiAdapter;
 
     @Override
     public Map<String, Track> findUserTracks(String username) throws NoSuchUserException {
 
         HashMap<String, Track> songs = new HashMap<String, Track>();
-        if( username.equals("InValidUser"))
+        SoundcloudJsonDeserializer ds = new SoundcloudJsonDeserializer();
+
+        String response = apiAdapter.getUserTracksJSON(username);
+
+        try
         {
-            throw new NoSuchUserException("User: " + username + " doesn't exist");
+            if( response.contains( ERRORS ))
+            {
+                throw new NoSuchUserException("User: " + username + " doesn't exist");
+            }
+
+            for (Track track : ds.getTracks(response)) {
+                songs.put( track.getId(), track);
+            }
         }
-        songs.put( "1", new Track("1"));
+        catch (IOException e)
+        {
+
+        }
+
         return songs;
     }
 }
