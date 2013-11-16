@@ -45,7 +45,7 @@ public class DownloadTrackFromSoundcloudTest
     @Before
     public void setUp() throws Exception
     {
-        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/tracks.json"));
+        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/single_track.json"));
         assertNotNull(tracksJson);
     }
 
@@ -72,7 +72,6 @@ public class DownloadTrackFromSoundcloudTest
     {
         when(apiAdapter.getUserTracksJSON(NONEXISTING_USER)).thenReturn(NOT_FOUND_JSON);
         expectedEx.expect(NoSuchUserException.class);
-        expectedEx.expectMessage("User: " + NONEXISTING_USER + " doesn't exist");
 
         service.findUserTracks(NONEXISTING_USER);
     }

@@ -22,20 +22,20 @@ public class SoundclubJsonDeserializerTest
     @Before
     public void setUp() throws Exception
     {
-        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/tracks.json"));
+        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/single_track.json"));
         multipleTracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/multiple_tracks.json"));
         deserializer = new SoundcloudJsonDeserializer();
     }
 
 
     @Test
-    public void deserializeJsonWithOneTrackObject() throws Exception {
+    public void deserializeJsonThatHasOneTrack() throws Exception {
         List<Track> track = deserializer.getTracks(tracksJson);
         assertThat(track.size(), is(1));
     }
 
     @Test
-    public void deserializeJsonWithMultipleTrackObjects() throws Exception {
+    public void deserializeJsonThatHasMultipleTracks() throws Exception {
         List<Track> track = deserializer.getTracks(multipleTracksJson);
         assertThat(track.size(), is(2));
     }

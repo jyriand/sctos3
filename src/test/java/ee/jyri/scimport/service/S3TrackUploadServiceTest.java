@@ -44,7 +44,7 @@ public class S3TrackUploadServiceTest
     }
 
     @Test
-    public void throwsExceptionIfTrackCannotBeDownloaded() throws Exception {
+    public void throwsExceptionIfTrackIsNotDownloadable() throws Exception {
         track.setDownloadable( false );
 
         expectedEx.expect( Exception.class );
@@ -65,7 +65,7 @@ public class S3TrackUploadServiceTest
     public void uploadsOnlyIfTrackIsOfMP3Format() throws Exception {
         track.setFormat("mpeg");
         expectedEx.expect(Exception.class);
-        expectedEx.expectMessage( "Only mp3 format is supported" );
+
         service.uploadTrack(track);
 
         verifyZeroInteractions(adapter);
