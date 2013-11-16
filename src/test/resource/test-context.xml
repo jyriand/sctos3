@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="soundcloudService" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="ee.jyri.scimport.service.SoundcloudService" />
+        <constructor-arg value="ee.jyri.scimport.service.TrackService" />
     </bean>
     <bean id="uploadService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="ee.jyri.scimport.service.UploadService" />

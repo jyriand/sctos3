@@ -1,11 +1,11 @@
 package ee.jyri.scimport.web;
 
-import java.text.DateFormat;
 import java.util.*;
 
 import ee.jyri.scimport.domain.SimpleResponse;
-import ee.jyri.scimport.domain.Song;
-import ee.jyri.scimport.service.SoundcloudService;
+import ee.jyri.scimport.domain.Track;
+import ee.jyri.scimport.error.NoSuchUserException;
+import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,38 +19,41 @@ public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-    public static final String MODEL_SONGS = "userSongs";
+    public static final String MODEL_TRACKS = "userTracks";
+    public static final String REQ_SEARCH_TRACKS = "/searchUserTracks";
+    public static final String REQ_SAVE_TRACK = "/saveTrack";
+    public static final String VIEW_HOME = "home";
 
     @Autowired
-    private SoundcloudService< Song > soundcloudService;
+    private TrackService trackService;
 
     @Autowired
-    private UploadService< Song > uploadService;
+    private UploadService<Track> uploadService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home( Model model) {
         logger.info("Welcome home! ");
-        return "home";
+        return VIEW_HOME;
     }
 
-    @RequestMapping(value = "/searchUserSongs", method = RequestMethod.GET)
-    public String searchUser(@RequestParam String username, Model model) {
-        model.addAttribute(MODEL_SONGS, soundcloudService.findUserSongs(username).values());
+    @RequestMapping(value = REQ_SEARCH_TRACKS, method = RequestMethod.GET)
+    public String searchUser(@RequestParam String username, Model model) throws Exception {
+        model.addAttribute(MODEL_TRACKS, trackService.findUserTracks(username).values());
         model.addAttribute("username", username );
-        return "home";
+        return VIEW_HOME;
     }
 
-    @RequestMapping(value = "/saveSong", method = RequestMethod.GET)
+    @RequestMapping(value = REQ_SAVE_TRACK, method = RequestMethod.GET)
     public @ResponseBody
-    SimpleResponse saveSongToStorage(@RequestParam String username, @RequestParam String songId, Model model) {
+    SimpleResponse saveSongToStorage(@RequestParam String username, @RequestParam String trackId, Model model) throws Exception {
 
-        Map<String, Song> userSongs = soundcloudService.findUserSongs(username);
+        Map<String, Track> userTracks = trackService.findUserTracks(username);
 
-        if( userSongs == null || userSongs.isEmpty() ){
+        if( userTracks == null || userTracks.isEmpty() ){
             return new SimpleResponse( false );
         }
 
-        uploadService.uploadFile( userSongs.get(songId) );
+        uploadService.uploadFile(userTracks.get(trackId));
         return new SimpleResponse(true);
     }
 
