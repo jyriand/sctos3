@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static ee.jyri.scimport.TestConstants.*;
-import static junit.framework.Assert.assertNotNull;
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
@@ -45,7 +45,7 @@ public class DownloadTrackFromSoundcloudTest
     @Before
     public void setUp() throws Exception
     {
-        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/tracks.json"));
+        tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/single_track.json"));
         assertNotNull(tracksJson);
     }
 
@@ -72,11 +72,9 @@ public class DownloadTrackFromSoundcloudTest
     {
         when(apiAdapter.getUserTracksJSON(NONEXISTING_USER)).thenReturn(NOT_FOUND_JSON);
         expectedEx.expect(NoSuchUserException.class);
-        expectedEx.expectMessage("User: " + NONEXISTING_USER + " doesn't exist");
 
         service.findUserTracks(NONEXISTING_USER);
     }
-
 
     @Test
     public void returnedMapShouldContainTracksFromResponseJson() throws Exception {
@@ -87,9 +85,5 @@ public class DownloadTrackFromSoundcloudTest
 
         Track track = userTracks.get("13158665");
         assertThat(track.getId(), is( "13158665" ));
-
     }
-
-
-
 }
