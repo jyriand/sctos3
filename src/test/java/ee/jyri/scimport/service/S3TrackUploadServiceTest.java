@@ -2,10 +2,7 @@ package ee.jyri.scimport.service;
 
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.sun.tools.internal.ws.wsdl.document.mime.MIMEContent;
-import com.sun.xml.internal.xsom.impl.Ref;
 import ee.jyri.scimport.domain.Track;
-import org.apache.http.entity.mime.MIME;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,11 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.activation.MimeType;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

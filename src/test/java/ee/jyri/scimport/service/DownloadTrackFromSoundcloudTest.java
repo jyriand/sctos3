@@ -1,13 +1,9 @@
 package ee.jyri.scimport.service;
 
-import com.jayway.jsonpath.JsonPath;
 import ee.jyri.scimport.domain.Track;
 import ee.jyri.scimport.error.NoSuchUserException;
 import org.apache.commons.io.FileUtils;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,14 +13,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 import static ee.jyri.scimport.TestConstants.*;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 

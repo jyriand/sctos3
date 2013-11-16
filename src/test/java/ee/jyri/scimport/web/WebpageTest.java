@@ -17,9 +17,7 @@ import java.util.Map;
 
 import static ee.jyri.scimport.TestConstants.*;
 import static ee.jyri.scimport.web.HomeController.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.isNull;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

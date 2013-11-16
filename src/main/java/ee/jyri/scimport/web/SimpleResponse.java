@@ -1,4 +1,4 @@
-package ee.jyri.scimport.domain;
+package ee.jyri.scimport.web;
 
 
 public class SimpleResponse {

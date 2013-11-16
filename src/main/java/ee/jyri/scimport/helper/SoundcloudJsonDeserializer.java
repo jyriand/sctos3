@@ -2,7 +2,6 @@ package ee.jyri.scimport.helper;
 
 
 import ee.jyri.scimport.domain.Track;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
