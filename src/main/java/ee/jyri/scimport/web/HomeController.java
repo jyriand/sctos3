@@ -4,7 +4,6 @@ import java.util.*;
 
 import ee.jyri.scimport.domain.SimpleResponse;
 import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.error.NoSuchUserException;
 import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.slf4j.Logger;
@@ -28,7 +27,7 @@ public class HomeController {
     private TrackService trackService;
 
     @Autowired
-    private UploadService<Track> uploadService;
+    private UploadService uploadService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home( Model model) {
@@ -53,7 +52,7 @@ public class HomeController {
             return new SimpleResponse( false );
         }
 
-        uploadService.uploadFile(userTracks.get(trackId));
+        uploadService.uploadTrack(userTracks.get(trackId));
         return new SimpleResponse(true);
     }
 

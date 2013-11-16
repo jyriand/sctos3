@@ -1,9 +1,11 @@
 package ee.jyri.scimport.service;
 
 
+import ee.jyri.scimport.domain.Track;
+
 import java.io.File;
 
-public interface UploadService< T > {
+public interface UploadService {
 
-    void uploadFile( T fileName );
+    void uploadTrack(Track fileName);
 }

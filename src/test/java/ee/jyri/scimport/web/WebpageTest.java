@@ -1,8 +1,6 @@
 package ee.jyri.scimport.web;
 
-import ee.jyri.scimport.TestConstants;
 import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.service.SoundcloudTrackService;
 import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.junit.Before;
@@ -36,7 +34,7 @@ public class WebpageTest {
     private TrackService trackService;
 
     @Mock
-    private UploadService<Track> uploadService;
+    private UploadService uploadService;
 
     @InjectMocks
     private HomeController homeController = new HomeController();
@@ -88,7 +86,7 @@ public class WebpageTest {
             .andExpect(jsonPath("$.success").value(true));
 
         verify(trackService, times(1)).findUserTracks(EXISTING_USER);
-        verify(uploadService).uploadFile(any( Track.class ));
+        verify(uploadService).uploadTrack(any(Track.class));
 
     }
 
