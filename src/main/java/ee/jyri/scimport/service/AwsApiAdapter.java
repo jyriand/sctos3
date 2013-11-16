@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 public class AwsApiAdapter
 {
 
-    public void upload( String url, ObjectMetadata metaData )
+    public void upload( String url, String name, ObjectMetadata metaData )
     {
 
     }
