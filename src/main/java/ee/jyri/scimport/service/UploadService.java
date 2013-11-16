@@ -7,5 +7,5 @@ import java.io.File;
 
 public interface UploadService {
 
-    void uploadTrack(Track fileName);
+    void uploadTrack(Track fileName) throws Exception;
 }

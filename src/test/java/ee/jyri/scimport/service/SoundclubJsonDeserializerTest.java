@@ -39,4 +39,15 @@ public class SoundclubJsonDeserializerTest
         List<Track> track = deserializer.getTracks(multipleTracksJson);
         assertThat(track.size(), is(2));
     }
+
+    @Test
+    public void deserializesTrackFields() throws Exception {
+        SoundcloudJsonDeserializer deserializer = new SoundcloudJsonDeserializer();
+        Track track = deserializer.getTracks(multipleTracksJson).get(0);
+
+        assertThat( track.getId(), is("13158665"));
+        assertThat(track.isDownloadable(), is(true));
+        assertThat(track.getDownloadUrl(), is("http://api.soundcloud.com/tracks/13158665/download"));
+        assertThat( track.getContentLength(), is(10211857L));
+    }
 }
