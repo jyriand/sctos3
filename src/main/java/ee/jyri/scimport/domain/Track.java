@@ -11,24 +11,16 @@ public class Track {
 
     private boolean downloadable;
 
+    private String title;
+
     @JsonProperty( "original_content_size" )
     private long contentLength;
 
     @JsonProperty( "download_url" )
     private String downloadUrl;
 
-    private String title;
-
     @JsonProperty( "original_format" )
     private String format;
-
-    public Track()
-    {
-    }
-
-    public Track(String id){
-        this.id = id;
-    }
 
     public boolean isMp3() {
         return format.equals("mp3");

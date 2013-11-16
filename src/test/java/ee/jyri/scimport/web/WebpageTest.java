@@ -1,6 +1,7 @@
 package ee.jyri.scimport.web;
 
 import ee.jyri.scimport.domain.Track;
+import ee.jyri.scimport.error.NoSuchUserException;
 import ee.jyri.scimport.service.TrackService;
 import ee.jyri.scimport.service.UploadService;
 import org.junit.Before;
@@ -27,7 +28,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @RunWith(MockitoJUnitRunner.class)
 public class WebpageTest {
 
-
     private MockMvc mockMvc;
 
     @Mock
@@ -53,8 +53,8 @@ public class WebpageTest {
     }
 
     @Test
-    public void searchForExistngUsersSongs_returnModelWithSongs() throws Exception {
-        Map<String, Track> songs = createSongs();
+    public void searchForExistngUsersSongsReturnModelWithTracks() throws Exception {
+        Map<String, Track> songs = createTracks();
         when(trackService.findUserTracks(anyString()))
                 .thenReturn(songs);
 
@@ -67,19 +67,18 @@ public class WebpageTest {
     }
 
     @Test
-    public void searchForNonExistingUsersSongs_returnsNothing() throws Exception {
-        HashMap<String, Track> emptyMap = new HashMap<String, Track>();
-        when(trackService.findUserTracks(anyString())).thenReturn( emptyMap );
+    public void searchForNonExistingUsersTracksReturnsErrorMessageInModel() throws Exception {
+        when(trackService.findUserTracks(anyString())).thenThrow( NoSuchUserException.class );
 
         mockMvc.perform(get(REQ_SEARCH_TRACKS).param(USERNAME, NONEXISTING_USER))
-                .andExpect(model().attribute(MODEL_TRACKS, emptyMap.values()));
+                .andExpect(model().attribute(MODEL_USER_ERROR, "User " +NONEXISTING_USER+" doesn't exist."));
 
         verify(trackService, times(1)).findUserTracks(NONEXISTING_USER);
     }
 
     @Test
-    public void canSaveSongToStorage_returnsSuccess() throws Exception {
-        when(trackService.findUserTracks(anyString())).thenReturn(createSongs());
+    public void savingTrackToStorageReturnsJsonWithSuccess() throws Exception {
+        when(trackService.findUserTracks(anyString())).thenReturn(createTracks());
 
         mockMvc.perform(get(REQ_SAVE_TRACK).param(USERNAME, EXISTING_USER).param(TRACK_ID, "1"))
             .andExpect(content().contentType(JSON_CHARSET))
@@ -91,8 +90,8 @@ public class WebpageTest {
     }
 
     @Test
-    public void saveSongToStorage_withNonExistingSong_returnsFailure() throws Exception {
-        when(trackService.findUserTracks(anyString())).thenReturn( new HashMap<String, Track>());
+    public void savingTrackToStorageWithNonExistingTrackReturnsFailure() throws Exception {
+        when(trackService.findUserTracks(anyString())).thenThrow( Exception.class );
 
         mockMvc.perform(get(REQ_SAVE_TRACK).param(USERNAME, EXISTING_USER).param(TRACK_ID, "1"))
                 .andExpect((content().contentType(JSON_CHARSET)))
@@ -102,10 +101,14 @@ public class WebpageTest {
         verifyZeroInteractions(uploadService);
     }
 
-    private Map< String, Track> createSongs(){
+    private Map< String, Track> createTracks(){
         HashMap<String, Track> songs = new HashMap<String, Track>();
-        songs.put( "1", new Track("1"));
-        songs.put("2", new Track("2"));
+        Track track1 = new Track();
+        track1.setId( "1" );
+        Track track2 = new Track();
+        track1.setId( "2" );
+        songs.put( track1.getId(), track1);
+        songs.put( track2.getId(), track2);
         return songs;
     }
 
