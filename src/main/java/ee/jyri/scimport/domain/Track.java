@@ -73,4 +73,8 @@ public class Track {
     public void setFormat(String format) {
         this.format = format;
     }
+
+    public String getKey() {
+        return title + "-" + System.currentTimeMillis() + "." + format;
+    }
 }

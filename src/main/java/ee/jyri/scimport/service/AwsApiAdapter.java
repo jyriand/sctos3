@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class AwsApiAdapter
 {
 
-    public void upload( String url, String name, ObjectMetadata metaData )
+    public void upload( String url, String key, ObjectMetadata metaData )
     {
 
     }

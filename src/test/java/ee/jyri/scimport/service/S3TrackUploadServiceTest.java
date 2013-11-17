@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Date;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
@@ -55,7 +57,7 @@ public class S3TrackUploadServiceTest
     public void uploadsTrackToAmazonS3() throws Exception {
         service.uploadTrack( track );
         verify(adapter, times(1)).upload(matches(track.getDownloadUrl()),
-                matches(track.getTitle()), any(ObjectMetadata.class) );
+                contains(track.getTitle()), any(ObjectMetadata.class) );
     }
 
     @Test
@@ -84,6 +86,17 @@ public class S3TrackUploadServiceTest
         ObjectMetadata value = argument.getValue();
         assertThat( meta.getContentLength(), is(value.getContentLength()));
         assertThat( meta.getContentType(), is(value.getContentType()));
+    }
+
+    @Test
+    public void addsTimestampToFilenameSoThatFilesWithSameTitleWouldNotBeOverwrittern() throws Exception {
+
+        service.uploadTrack( track );
+
+        verify(adapter).upload(
+                anyString(),
+                matches("^"+track.getTitle()+"-\\d{13}." + track.getFormat()),
+                any(ObjectMetadata.class));
     }
 
     private Track createTestTrack() {

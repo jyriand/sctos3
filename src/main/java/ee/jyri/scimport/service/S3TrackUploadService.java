@@ -24,7 +24,7 @@ public class S3TrackUploadService implements UploadService {
             throw new Exception( "Only mp3 format is supported" );
         }
 
-        awsApiAdapter.upload( track.getDownloadUrl(), track.getTitle(), createObjectMetadata(track));
+        awsApiAdapter.upload( track.getDownloadUrl(), track.getKey(), createObjectMetadata(track));
     }
 
     private ObjectMetadata createObjectMetadata(Track track) {

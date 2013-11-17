@@ -2,6 +2,7 @@ package ee.jyri.scimport.ee.jyri.scimport.integration;
 
 import ee.jyri.scimport.domain.Track;
 import ee.jyri.scimport.service.SoundcloudTrackService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ public class SoundcloudIntegrationTest
     private SoundcloudTrackService trackService;
 
     @Test
+    @Ignore
     public void testName() throws Exception {
         Map<String,Track> tracks = trackService.findUserTracks("apitest");
         assertThat(tracks.size(), greaterThan(1));
