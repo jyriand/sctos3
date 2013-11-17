@@ -1,9 +1,11 @@
 package ee.jyri.scimport.ee.jyri.scimport.integration;
 
+import com.amazonaws.services.s3.transfer.TransferManager;
 import ee.jyri.scimport.domain.Track;
 import ee.jyri.scimport.service.AwsApiAdapter;
 import ee.jyri.scimport.service.S3TrackUploadService;
 import ee.jyri.scimport.service.SoundcloudTrackService;
+import org.hamcrest.CoreMatchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,10 +46,15 @@ public class IntegrationTest
     }
 
     @Test
-    public void awsApiAdapterHasCorrectProperties() throws Exception {
-
+    public void awsApiAdapterHasBucketNamePropertyInjected() throws Exception {
         String bucket = (String) ReflectionTestUtils.getField(awsApiAdapter, "bucketName");
         assertThat(bucket, notNullValue());
         assertThat( bucket, is(bucketName));
+    }
+
+    @Test
+    public void awsApiAdapterHasTransferManagerInjected() throws Exception {
+        TransferManager transferManager = (TransferManager) ReflectionTestUtils.getField(awsApiAdapter, "transferManager");
+        assertThat(transferManager, notNullValue());
     }
 }
