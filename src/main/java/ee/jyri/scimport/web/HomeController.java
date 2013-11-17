@@ -69,6 +69,7 @@ public class HomeController {
         }
         catch (Exception e)
         {
+            logger.error("Saving track failed: " + e.getMessage() );
             return new SimpleResponse(false);
         }
     }
