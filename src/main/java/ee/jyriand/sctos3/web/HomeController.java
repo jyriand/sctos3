@@ -34,17 +34,19 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(Model model) {
-        logger.info("Welcome home! ");
+        logger.info("Landed home");
         return VIEW_HOME;
     }
 
     @RequestMapping(value = REQ_SEARCH_TRACKS, method = RequestMethod.GET)
     public String searchUserTracks(@RequestParam String username, Model model) {
+        logger.info("Landed searchUserTracks: username=" + username);
         try {
             model.addAttribute(MODEL_TRACKS, trackService.findUserTracks(username).values());
             model.addAttribute("username", username);
         } catch (Exception e) {
             model.addAttribute(MODEL_USER_ERROR, "User " + username + " doesn't exist.");
+            logger.error("Error: " + e.getMessage());
         }
         return VIEW_HOME;
     }
@@ -53,7 +55,7 @@ public class HomeController {
     public
     @ResponseBody
     SimpleResponse saveTrack(@RequestParam String username, @RequestParam String trackId, Model model) {
-        logger.info("Saving track");
+        logger.info("Landed savingTrack: username {}, trackId: {}", username, trackId);
         try {
             Map<String, Track> userTracks = trackService.findUserTracks(username);
 
@@ -61,9 +63,7 @@ public class HomeController {
                 return new SimpleResponse(false);
             }
 
-            Track track = userTracks.get(trackId);
-            logger.debug("Found track");
-            uploadService.uploadTrack(track);
+            uploadService.uploadTrack(userTracks.get(trackId));
             return new SimpleResponse(true);
         } catch (Exception e) {
             logger.error("Saving track failed: " + e.getMessage());
