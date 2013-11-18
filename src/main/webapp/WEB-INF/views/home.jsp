@@ -4,20 +4,32 @@
 <head>
 	<title>Home</title>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://codeorigin.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://codeorigin.jquery.com/ui/1.10.3/themes/ui-lightness/jquery-ui.css"/>
+	<style>
+            .ui-dialog-titlebar-close {
+            visibility: hidden;
+            }
+        </style>
 	<script>
         $(function(){
+            $("#uploading").dialog({
+                modal:true,
+                autoOpen: false
+            });
             $(".sendTrack").click(function(){
-                console.log('This button clikked')
+                $("#uploading").dialog('open');
                 var button = $(this);
                 var id = $(this).attr('id');
                 var user = $(this).attr('user');
-
                 var url = '/saveTrack?username=' + user + '&trackId='+id;
+
                 $.get(url, function(data){
+                    $("#uploading").dialog('close');
                     if(data.success){
-                        button.replaceWith("SENDING");
+                        button.replaceWith("COMPLETED");
                     }else{
-                        alert("Failed");
+                        button.replaceWith("FAILED")
                     }
                 });
             });
@@ -71,6 +83,8 @@
 	</c:forEach>
 </table>
 </c:if>
-
+<div id="uploading" title="Uploading file" style="display:none;">
+    <p>Please wait while the file is uploaded</p>
+</div>
 </body>
 </html>

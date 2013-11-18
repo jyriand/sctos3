@@ -28,5 +28,6 @@ public class AwsApiAdapter {
         logger.info("Uploading file {} to {} bucket", key, bucketName);
         InputStream inputStream = new URL(url).openStream();
         Upload upload = transferManager.upload(bucketName, key, inputStream, metaData);
+        upload.waitForCompletion();
     }
 }
