@@ -5,8 +5,6 @@ import ee.jyri.scimport.domain.Track;
 import ee.jyri.scimport.service.AwsApiAdapter;
 import ee.jyri.scimport.service.S3TrackUploadService;
 import ee.jyri.scimport.service.SoundcloudTrackService;
-import org.hamcrest.CoreMatchers;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,7 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml")
-public class IntegrationTest
-{
+public class IntegrationTest {
     @Autowired
     private SoundcloudTrackService trackService;
 
@@ -41,7 +38,7 @@ public class IntegrationTest
 
     @Test
     public void soundcloudAdapterCanFetchUserTracksJson() throws Exception {
-        Map<String,Track> tracks = trackService.findUserTracks("apitest");
+        Map<String, Track> tracks = trackService.findUserTracks("apitest");
         assertThat(tracks.size(), greaterThan(1));
     }
 
@@ -49,7 +46,7 @@ public class IntegrationTest
     public void awsApiAdapterHasBucketNamePropertyInjected() throws Exception {
         String bucket = (String) ReflectionTestUtils.getField(awsApiAdapter, "bucketName");
         assertThat(bucket, notNullValue());
-        assertThat( bucket, is(bucketName));
+        assertThat(bucket, is(bucketName));
     }
 
     @Test
@@ -57,4 +54,12 @@ public class IntegrationTest
         TransferManager transferManager = (TransferManager) ReflectionTestUtils.getField(awsApiAdapter, "transferManager");
         assertThat(transferManager, notNullValue());
     }
+
+//    @Test
+//    public void testName() throws Exception {
+//        Map<String,Track> tracks = trackService.findUserTracks("kareluz");
+//        Track track = tracks.get("13455991");
+////        track.setDownloadUrl("https://api.soundcloud.com/tracks/13455991/download");
+//        uploadService.uploadTrack(track);
+//    }
 }

@@ -7,19 +7,20 @@ import org.codehaus.jackson.annotate.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Track {
 
+    public static final String CLIENT_ID = "?client_id=";
     private String id;
 
     private boolean downloadable;
 
     private String title;
 
-    @JsonProperty( "original_content_size" )
+    @JsonProperty("original_content_size")
     private long contentLength;
 
-    @JsonProperty( "download_url" )
+    @JsonProperty("download_url")
     private String downloadUrl;
 
-    @JsonProperty( "original_format" )
+    @JsonProperty("original_format")
     private String format;
 
     public boolean isMp3() {
@@ -77,4 +78,13 @@ public class Track {
     public String getKey() {
         return title + "-" + System.currentTimeMillis() + "." + format;
     }
+
+    public String getDownloadUrlWithClientId(String clientId) {
+        if (downloadUrl.contains("https")) {
+            downloadUrl = downloadUrl.replace("https", "http");
+        }
+
+        return downloadUrl + CLIENT_ID + clientId;
+    }
+
 }

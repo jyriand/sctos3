@@ -11,10 +11,10 @@ import java.util.List;
 
 public class SoundcloudJsonDeserializer {
 
-    public List<Track> getTracks(String json) throws IOException
-    {
+    public List<Track> getTracks(String json) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationConfig.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-        return mapper.readValue(json, new TypeReference<List<Track>>() {});
+        return mapper.readValue(json, new TypeReference<List<Track>>() {
+        });
     }
 }

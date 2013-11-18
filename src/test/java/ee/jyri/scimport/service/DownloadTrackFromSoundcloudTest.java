@@ -23,8 +23,7 @@ import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class DownloadTrackFromSoundcloudTest
-{
+public class DownloadTrackFromSoundcloudTest {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
@@ -37,33 +36,29 @@ public class DownloadTrackFromSoundcloudTest
     String tracksJson;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         tracksJson = FileUtils.readFileToString(new File("src/test/resource/fixtures/single_track.json"));
         assertNotNull(tracksJson);
     }
 
     @Test
-    public void findUserTracks_validUsername_returnsMapOfTracks() throws Exception
-    {
-        when(apiAdapter.getUserTracksJSON(EXISTING_USER)).thenReturn( tracksJson );
+    public void findUserTracks_validUsername_returnsMapOfTracks() throws Exception {
+        when(apiAdapter.getUserTracksJSON(EXISTING_USER)).thenReturn(tracksJson);
 
-        Map<String,Track> userTracks = service.findUserTracks(EXISTING_USER);
+        Map<String, Track> userTracks = service.findUserTracks(EXISTING_USER);
         assertNotNull(userTracks);
     }
 
     @Test
-    public void validUserWhoHasNoTracksReturnsEmptyMap() throws Exception
-    {
+    public void validUserWhoHasNoTracksReturnsEmptyMap() throws Exception {
         when(apiAdapter.getUserTracksJSON(USER_WITHOUT_TRACKS)).thenReturn(EMPTY_JSON_RESPONSE);
 
-        Map<String,Track> userTracks = service.findUserTracks(USER_WITHOUT_TRACKS);
-        assertThat( userTracks.isEmpty(), is(true));
+        Map<String, Track> userTracks = service.findUserTracks(USER_WITHOUT_TRACKS);
+        assertThat(userTracks.isEmpty(), is(true));
     }
 
     @Test
-    public void findUserTracks_invalidUsername_throwsAnException() throws Exception
-    {
+    public void findUserTracks_invalidUsername_throwsAnException() throws Exception {
         when(apiAdapter.getUserTracksJSON(NONEXISTING_USER)).thenReturn(NOT_FOUND_JSON);
         expectedEx.expect(NoSuchUserException.class);
 
@@ -78,6 +73,6 @@ public class DownloadTrackFromSoundcloudTest
         assertThat(userTracks.size(), is(1));
 
         Track track = userTracks.get("13158665");
-        assertThat(track.getId(), is( "13158665" ));
+        assertThat(track.getId(), is("13158665"));
     }
 }

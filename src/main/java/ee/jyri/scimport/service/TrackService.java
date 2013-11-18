@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface TrackService {
 
-    Map< String, Track> findUserTracks(String username) throws Exception, NoSuchUserException;
+    Map<String, Track> findUserTracks(String username) throws Exception, NoSuchUserException;
 }

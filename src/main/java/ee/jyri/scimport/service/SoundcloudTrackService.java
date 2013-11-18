@@ -26,19 +26,15 @@ public class SoundcloudTrackService implements TrackService {
 
         String response = apiAdapter.getUserTracksJSON(username);
 
-        try
-        {
-            if( response.contains( ERRORS ))
-            {
+        try {
+            if (response.contains(ERRORS)) {
                 throw new NoSuchUserException("User: " + username + " doesn't exist");
             }
 
             for (Track track : ds.getTracks(response)) {
-                songs.put( track.getId(), track);
+                songs.put(track.getId(), track);
             }
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
 
         }
 
