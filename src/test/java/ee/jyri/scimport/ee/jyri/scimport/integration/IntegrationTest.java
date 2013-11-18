@@ -54,12 +54,4 @@ public class IntegrationTest {
         TransferManager transferManager = (TransferManager) ReflectionTestUtils.getField(awsApiAdapter, "transferManager");
         assertThat(transferManager, notNullValue());
     }
-
-//    @Test
-//    public void testName() throws Exception {
-//        Map<String,Track> tracks = trackService.findUserTracks("kareluz");
-//        Track track = tracks.get("13455991");
-////        track.setDownloadUrl("https://api.soundcloud.com/tracks/13455991/download");
-//        uploadService.uploadTrack(track);
-//    }
 }
