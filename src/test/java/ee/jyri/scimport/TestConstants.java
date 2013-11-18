@@ -1,8 +1,7 @@
 package ee.jyri.scimport;
 
 
-public class TestConstants
-{
+public class TestConstants {
     public static final String USERNAME = "username";
     public static final String TRACK_ID = "trackId";
     public static final String EXISTING_USER = "ValidUser";

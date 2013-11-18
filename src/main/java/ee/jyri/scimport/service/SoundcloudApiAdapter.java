@@ -21,17 +21,14 @@ public class SoundcloudApiAdapter {
     public String getUserTracksJSON(String username) {
 
         String tracksJson = null;
-        try
-        {
+        try {
             ApiWrapper wrapper = new ApiWrapper(clientId, null, null, null);
 
             long userId = wrapper.resolve(SOUNDCLOUD_URL + username);
 
             HttpResponse response = wrapper.get(Request.to("/users/%d/tracks/", userId));
             tracksJson = Http.formatJSON(Http.getString(response));
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Error");
         }
 

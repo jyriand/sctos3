@@ -33,43 +33,40 @@ public class HomeController {
     private UploadService uploadService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home( Model model) {
+    public String home(Model model) {
         logger.info("Welcome home! ");
         return VIEW_HOME;
     }
 
     @RequestMapping(value = REQ_SEARCH_TRACKS, method = RequestMethod.GET)
     public String searchUserTracks(@RequestParam String username, Model model) {
-        try
-        {
+        try {
             model.addAttribute(MODEL_TRACKS, trackService.findUserTracks(username).values());
-            model.addAttribute("username", username );
-        }
-        catch (Exception e)
-        {
+            model.addAttribute("username", username);
+        } catch (Exception e) {
             model.addAttribute(MODEL_USER_ERROR, "User " + username + " doesn't exist.");
         }
         return VIEW_HOME;
     }
 
     @RequestMapping(value = REQ_SAVE_TRACK, method = RequestMethod.GET)
-    public @ResponseBody
-    SimpleResponse saveTrack(@RequestParam String username, @RequestParam String trackId, Model model)
-    {
-        try
-        {
+    public
+    @ResponseBody
+    SimpleResponse saveTrack(@RequestParam String username, @RequestParam String trackId, Model model) {
+        logger.info("Saving track");
+        try {
             Map<String, Track> userTracks = trackService.findUserTracks(username);
 
-            if( userTracks == null || userTracks.isEmpty() ){
-                return new SimpleResponse( false );
+            if (userTracks == null || userTracks.isEmpty()) {
+                return new SimpleResponse(false);
             }
 
-            uploadService.uploadTrack(userTracks.get(trackId));
+            Track track = userTracks.get(trackId);
+            logger.debug("Found track");
+            uploadService.uploadTrack(track);
             return new SimpleResponse(true);
-        }
-        catch (Exception e)
-        {
-            logger.error("Saving track failed: " + e.getMessage() );
+        } catch (Exception e) {
+            logger.error("Saving track failed: " + e.getMessage());
             return new SimpleResponse(false);
         }
     }

@@ -38,7 +38,7 @@ public class WebpageTest {
     private HomeController homeController = new HomeController();
 
     @Before
-    public void setUp(){
+    public void setUp() {
         this.mockMvc = standaloneSetup(homeController)
                 .alwaysExpect(status().isOk())
                 .build();
@@ -66,10 +66,10 @@ public class WebpageTest {
 
     @Test
     public void searchForNonExistingUsersTracksReturnsErrorMessageInModel() throws Exception {
-        when(trackService.findUserTracks(anyString())).thenThrow( NoSuchUserException.class );
+        when(trackService.findUserTracks(anyString())).thenThrow(NoSuchUserException.class);
 
         mockMvc.perform(get(REQ_SEARCH_TRACKS).param(USERNAME, NONEXISTING_USER))
-                .andExpect(model().attribute(MODEL_USER_ERROR, "User " +NONEXISTING_USER+" doesn't exist."));
+                .andExpect(model().attribute(MODEL_USER_ERROR, "User " + NONEXISTING_USER + " doesn't exist."));
 
         verify(trackService, times(1)).findUserTracks(NONEXISTING_USER);
     }
@@ -79,8 +79,8 @@ public class WebpageTest {
         when(trackService.findUserTracks(anyString())).thenReturn(createTracks());
 
         mockMvc.perform(get(REQ_SAVE_TRACK).param(USERNAME, EXISTING_USER).param(TRACK_ID, "1"))
-            .andExpect(content().contentType(JSON_CHARSET))
-            .andExpect(jsonPath("$.success").value(true));
+                .andExpect(content().contentType(JSON_CHARSET))
+                .andExpect(jsonPath("$.success").value(true));
 
         verify(trackService, times(1)).findUserTracks(EXISTING_USER);
         verify(uploadService).uploadTrack(any(Track.class));
@@ -89,7 +89,7 @@ public class WebpageTest {
 
     @Test
     public void savingTrackToStorageWithNonExistingTrackReturnsFailure() throws Exception {
-        when(trackService.findUserTracks(anyString())).thenThrow( Exception.class );
+        when(trackService.findUserTracks(anyString())).thenThrow(Exception.class);
 
         mockMvc.perform(get(REQ_SAVE_TRACK).param(USERNAME, EXISTING_USER).param(TRACK_ID, "1"))
                 .andExpect((content().contentType(JSON_CHARSET)))
@@ -99,14 +99,14 @@ public class WebpageTest {
         verifyZeroInteractions(uploadService);
     }
 
-    private Map< String, Track> createTracks(){
+    private Map<String, Track> createTracks() {
         HashMap<String, Track> songs = new HashMap<String, Track>();
         Track track1 = new Track();
-        track1.setId( "1" );
+        track1.setId("1");
         Track track2 = new Track();
-        track1.setId( "2" );
-        songs.put( track1.getId(), track1);
-        songs.put( track2.getId(), track2);
+        track1.setId("2");
+        songs.put(track1.getId(), track1);
+        songs.put(track2.getId(), track2);
         return songs;
     }
 
