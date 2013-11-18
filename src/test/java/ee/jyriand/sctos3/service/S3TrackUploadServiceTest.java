@@ -3,6 +3,7 @@ package ee.jyriand.sctos3.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import ee.jyriand.sctos3.domain.Track;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -106,6 +108,7 @@ public class S3TrackUploadServiceTest {
         assertThat(meta.getContentType(), is(value.getContentType()));
     }
 
+
     @Test
     public void addsTimestampToFilenameSoThatFilesWithSameTitleWouldNotBeOverwrittern() throws Exception {
 
@@ -115,6 +118,19 @@ public class S3TrackUploadServiceTest {
                 anyString(),
                 matches("^" + track.getTitle() + "-\\d{13}." + track.getFormat()),
                 any(ObjectMetadata.class));
+    }
+
+    @Test
+    public void doesntAddFileformatIfTitleHasIt() throws Exception {
+        track.setTitle("title.mp3");
+        assertThat(track.getKey(), not(containsString("title.mp3")));
+
+        track.setTitle("title");
+        assertThat(track.getKey(), containsString("title-"));
+
+        track.setTitle("Bigger title with spaces.mp3");
+        assertThat(track.getKey(), not(containsString("Bigger title with spaces.mp3")));
+
     }
 
     private Track createTestTrack() {

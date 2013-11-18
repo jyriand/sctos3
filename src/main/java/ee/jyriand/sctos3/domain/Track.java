@@ -1,6 +1,8 @@
 package ee.jyriand.sctos3.domain;
 
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -76,7 +78,7 @@ public class Track {
     }
 
     public String getKey() {
-        return title + "-" + System.currentTimeMillis() + "." + format;
+        return FilenameUtils.getBaseName(title) + "-" + System.currentTimeMillis() + "." + format;
     }
 
     public String getDownloadUrlWithClientId(String clientId) {
