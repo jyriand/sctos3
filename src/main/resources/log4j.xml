@@ -11,7 +11,7 @@
     </appender>
 
     <!-- Application Loggers -->
-    <logger name="ee.jyri.scimport">
+    <logger name="ee.jyriand.sctos3">
         <level value="info"/>
     </logger>
 

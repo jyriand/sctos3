@@ -1,9 +1,9 @@
-package ee.jyri.scimport.web;
+package ee.jyriand.sctos3.web;
 
-import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.error.NoSuchUserException;
-import ee.jyri.scimport.service.TrackService;
-import ee.jyri.scimport.service.UploadService;
+import ee.jyriand.sctos3.domain.Track;
+import ee.jyriand.sctos3.error.NoSuchUserException;
+import ee.jyriand.sctos3.service.TrackService;
+import ee.jyriand.sctos3.service.UploadService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ee.jyri.scimport.TestConstants.*;
-import static ee.jyri.scimport.web.HomeController.*;
+import static ee.jyriand.sctos3.TestConstants.*;
+import static ee.jyriand.sctos3.web.HomeController.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

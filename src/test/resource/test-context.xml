@@ -4,10 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="soundcloudService" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="ee.jyri.scimport.service.TrackService"/>
+        <constructor-arg value="ee.jyriand.sctos3.service.TrackService"/>
     </bean>
     <bean id="uploadService" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="ee.jyri.scimport.service.UploadService"/>
+        <constructor-arg value="ee.jyriand.sctos3.service.UploadService"/>
     </bean>
 
 </beans>

@@ -1,8 +1,8 @@
-package ee.jyri.scimport.service;
+package ee.jyriand.sctos3.service;
 
-import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.error.NoSuchUserException;
-import ee.jyri.scimport.helper.SoundcloudJsonDeserializer;
+import ee.jyriand.sctos3.domain.Track;
+import ee.jyriand.sctos3.error.NoSuchUserException;
+import ee.jyriand.sctos3.helper.SoundcloudJsonDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

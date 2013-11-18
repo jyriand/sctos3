@@ -1,7 +1,7 @@
-package ee.jyri.scimport.service;
+package ee.jyriand.sctos3.service;
 
 
-import ee.jyri.scimport.domain.Track;
+import ee.jyriand.sctos3.domain.Track;
 
 public interface UploadService {
 

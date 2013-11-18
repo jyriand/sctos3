@@ -70,12 +70,12 @@
             <td>${track.format}</td>
             <td>
                 <c:choose>
-                    <c:when test="${track.downloadable}">YES</c:when>
+                    <c:when test="${track.downloadable and track.isMp3()}">YES</c:when>
                     <c:otherwise>NO</c:otherwise>
                 </c:choose>
             </td>
             <td>
-                <c:if test="${track.downloadable}">
+                <c:if test="${track.downloadable and track.isMp3()}">
                     <button class="sendTrack" id="${track.id}" user="${username}">Copy to S3</button>
                 </c:if>
                 </td>

@@ -1,7 +1,7 @@
-package ee.jyri.scimport.service;
+package ee.jyriand.sctos3.service;
 
-import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.error.NoSuchUserException;
+import ee.jyriand.sctos3.domain.Track;
+import ee.jyriand.sctos3.error.NoSuchUserException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Rule;
@@ -15,7 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.File;
 import java.util.Map;
 
-import static ee.jyri.scimport.TestConstants.*;
+import static ee.jyriand.sctos3.TestConstants.*;
 import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

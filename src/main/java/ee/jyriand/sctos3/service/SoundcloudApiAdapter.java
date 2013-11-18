@@ -1,4 +1,4 @@
-package ee.jyri.scimport.service;
+package ee.jyriand.sctos3.service;
 
 
 import com.soundcloud.api.ApiWrapper;

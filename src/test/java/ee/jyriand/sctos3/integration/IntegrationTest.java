@@ -1,10 +1,10 @@
-package ee.jyri.scimport.ee.jyri.scimport.integration;
+package ee.jyriand.sctos3.integration;
 
 import com.amazonaws.services.s3.transfer.TransferManager;
-import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.service.AwsApiAdapter;
-import ee.jyri.scimport.service.S3TrackUploadService;
-import ee.jyri.scimport.service.SoundcloudTrackService;
+import ee.jyriand.sctos3.domain.Track;
+import ee.jyriand.sctos3.service.AwsApiAdapter;
+import ee.jyriand.sctos3.service.S3TrackUploadService;
+import ee.jyriand.sctos3.service.SoundcloudTrackService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

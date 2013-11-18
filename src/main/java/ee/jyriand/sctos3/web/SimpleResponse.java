@@ -1,4 +1,4 @@
-package ee.jyri.scimport.web;
+package ee.jyriand.sctos3.web;
 
 
 public class SimpleResponse {

@@ -1,7 +1,6 @@
-package ee.jyri.scimport.helper;
+package ee.jyriand.sctos3.helper;
 
-
-import ee.jyri.scimport.domain.Track;
+import ee.jyriand.sctos3.domain.Track;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;

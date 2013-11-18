@@ -1,8 +1,8 @@
-package ee.jyri.scimport.web;
+package ee.jyriand.sctos3.web;
 
-import ee.jyri.scimport.domain.Track;
-import ee.jyri.scimport.service.TrackService;
-import ee.jyri.scimport.service.UploadService;
+import ee.jyriand.sctos3.domain.Track;
+import ee.jyriand.sctos3.service.TrackService;
+import ee.jyriand.sctos3.service.UploadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

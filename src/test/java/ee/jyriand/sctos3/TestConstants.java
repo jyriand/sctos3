@@ -1,4 +1,4 @@
-package ee.jyri.scimport;
+package ee.jyriand.sctos3;
 
 
 public class TestConstants {

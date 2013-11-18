@@ -1,7 +1,7 @@
-package ee.jyri.scimport.service;
+package ee.jyriand.sctos3.service;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import ee.jyri.scimport.domain.Track;
+import ee.jyriand.sctos3.domain.Track;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

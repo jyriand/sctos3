@@ -29,6 +29,6 @@
     </beans:bean>
 
 
-    <context:component-scan base-package="ee.jyri.scimport"/>
+    <context:component-scan base-package="ee.jyriand.sctos3"/>
 
 </beans:beans>

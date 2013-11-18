@@ -1,4 +1,4 @@
-package ee.jyri.scimport.domain;
+package ee.jyriand.sctos3.domain;
 
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
